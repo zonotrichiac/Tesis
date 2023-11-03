@@ -1,0 +1,48 @@
+# A partir del data frame OF
+
+# Indexacion de variables
+# x -> chilcas; y -> rinconada; z -> talagante
+# Cambiar VARIABLE por titulo de la columna de OF
+>x <- as.numeric(
+   OF[OF$poblacion == "CHI", "VARIABLE"]) ;
+ y <- as.numeric(
+   OF[OF$poblacion == "RNC", "VARIABLE"]) ;
+ z <- as.numeric(
+   OF[OF$poblacion == "TAL", "VARIABLE"]
+)
+
+# Resumen preliminar
+>resumen.VARIABLE <- list(
+  "CHI" = summary(x) ,
+  "RNC" = summary(y) ,
+  "TAL" = summary(z)
+ ) ; hist(x) ; hist(y) ; hist(z)
+
+
+# Analisis de normalidad
+>shap.VARIABLE <- list(
+  "CHI" = shapiro.test(x) ,
+  "RNC" = shapiro.test(y) ,
+  "TAL" = shapiro.test(z)
+)
+
+# Si no es normal, realizar transformacion de los datos
+>boxCox(lm (a~1))  #con a = x, y o z
+
+# Si lambda=0 esta en el IC 95%
+>a.trans <- log(a)          # Variable normalizada; a = x, y o z
+
+>shapiro.test (a.trans)     # Confirmar normalizacion de los datos; a = x, y o z
+
+# Generacion nuevo data frame para ANOVA
+>VARIABLE.norm <- data.frame(
+  poblacion = OF$poblacion , 
+  VARIABLE = c(a.trans, b.trans, c.trans
+)
+
+# Homocedasticidad
+>library(car)
+>leveneTest(
+  VARIABLE.norm$VARIABLE,
+  VARIABLE.norm$poblacion
+)
