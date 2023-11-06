@@ -1,7 +1,7 @@
 # A partir del data frame OF
 
 # Indexacion de variables
-# x -> chilcas; y -> rinconada; z -> talagante
+# x: chilcas; y: rinconada; z: talagante
 # Cambiar VARIABLE por titulo de la columna de OF
 >x <- as.numeric(
    OF[OF$poblacion == "CHI", "VARIABLE"]) ;
